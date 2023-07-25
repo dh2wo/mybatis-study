@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.kdigital.score.dao.ScoreMapper">
+<insert id="addScore" parameterType="Student">
+	INSERT INTO 
+		student(stdid, stdname, it, language, basic)
+	VALUES 
+		(#{stdid},#{stdname},#{it},#{language},#{basic})
+</insert>
+
+<select id="selectByID" parameterType="int" resultType="Student">
+	SELECT 
+		* 
+	FROM 
+		student 
+	WHERE 
+		stdid = #{stdid}
+	
+</select>
+
+<select id="selectAll" resultType="Student">
+	SELECT 
+		* 
+	FROM 
+		student
+	ORDER BY
+		stdid
+</select>
+
+<delete id="deleteByID" parameterType="int">
+	DELETE
+		student
+	WHERE
+		stdid = #{stdid}
+</delete>
+
+<update id="updateScore" parameterType="Student">
+	UPDATE 
+		student 
+	SET 
+		it = #{it},
+		language = #{language},
+		basic = #{basic}
+	WHERE 
+		stdid = #{stdid}
+</update>
+</mapper>

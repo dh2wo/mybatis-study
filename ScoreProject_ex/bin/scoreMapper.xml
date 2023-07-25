@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="net.kdigital.score.dao.ScoreMapper"> 
+	<!-- 성적등록 -->
+	<insert id="insertScore" parameterType="Student">
+	INSERT INTO 
+		student
+	VALUES 
+		(#{stdid},#{stdname},#{it},#{language},#{basic})
+	</insert>
+	
+	<!-- 학번을 이용해 성적 검색 -->
+	<select id="findByStdid" parameterType="int" resultType="Student">
+	SELECT
+		stdid,
+		stdname,
+		it,
+		language,
+		basic
+	FROM
+		student
+	WHERE
+		stdid = #{stdid}
+	</select>
+	
+	<!-- 전체 성적 조회 -->
+	<select id="selectAll" resultType="Student">
+	SELECT
+		stdid,
+		stdname,
+		it,
+		language,
+		basic
+	FROM
+		student
+	ORDER BY
+		stdid
+	</select> 
+	
+	<!--  성적 수정 -->
+	<update id="updateScore" parameterType="Student">
+	UPDATE student
+	SET it = #{it},
+		language = #{language},
+		basic = #{basic}
+	WHERE
+		stdid = #{stdid}
+	</update>
+
+	<!--  성적 삭제 -->
+	<delete id="deleteScore" parameterType="int">
+	DELETE student
+	WHERE stdid = #{stdid}
+	</delete>
+</mapper>
+
+
+

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 인터페이스 이름(풀네임) -->
+<mapper namespace="net.kdigital.bmiproject.dao.BMIMapper">
+
+<insert id="memberAdd" parameterType = "Member">
+	INSERT INTO
+		bmimember(id, name, height, weight, bmi, bmiresult) 
+	VALUES
+		(#{id}, #{name}, #{height}, #{weight}, #{bmi}, #{bmiresult})
+</insert>
+
+<select id="selectByID" parameterType ="String" resultType ="Member">
+	SELECT
+		id,
+		name,
+		height,
+		weight,
+		bmi,
+		bmiresult,
+		deleteFlag,
+		TO_CHAR(regdate, 'yyyy-mm-dd') AS regdate,
+		upddate
+	FROM 
+		bmimember
+	WHERE
+		id = #{id}
+</select>
+
+<select id="selectByNR" parameterType ="map" resultType = "Member">
+	SELECT
+		id,
+		name,
+		height,
+		weight,
+		bmi,
+		bmiresult,
+		deleteFlag,
+		TO_CHAR(regdate, 'yyyy-mm-dd') AS regdate,
+		upddate
+	FROM 
+		bmimember
+	WHERE
+		deleteFlag = 0
+		AND
+		<if test = "name != null">
+			<!-- name = #{name} -->
+			name LIKE '%' || #{name} || '%'
+		</if>
+		<if test = "result != null">
+			bmiresult = #{result}
+		</if>
+</select>
+
+<update id="updateMember" parameterType = "Member">
+	UPDATE 
+		bmimember
+	SET
+		height = #{height}, 
+		weight = #{weight},
+		bmi = #{bmi},
+		bmiresult = #{bmiresult},
+		upddate = sysdate
+	WHERE
+		id = #{id}
+</update>
+
+<select id="selectAll" resultType="Member">
+	SELECT
+		id,
+		name,
+		height,
+		weight,
+		bmi,
+		bmiresult,
+		deleteFlag,
+		TO_CHAR(regdate, 'yyyy-mm-dd') AS regdate,
+		upddate
+	FROM 
+		bmimember
+	WHERE 
+		deleteFlag = 0
+</select>
+
+<update id="deleteFlagOnOff" parameterType = "map">
+	UPDATE 
+		bmimember
+	SET
+		<if test = "deleteFlag == 1">
+			deleteFlag = 1
+		</if>
+		<if test = "deleteFlag == 0">
+			deleteFlag = 0
+		</if>
+	WHERE
+		id = #{id}
+</update>
+
+<delete id="removeMember" parameterType="String">
+	DELETE
+		bmimember
+	WHERE
+		id = #{id}
+</delete>
+
+<!-- <select id="selectByName" parameterType = "string" resultType = "Member">
+	SELECT
+		id,
+		name,
+		height,
+		weight,
+		bmi,
+		bmiresult,
+		deleteFlag,
+		TO_CHAR(regdate, 'yyyy-mm-dd') AS regdate,
+		upddate
+	FROM 
+		bmimember
+	WHERE
+		name = #{name}
+</select> -->
+</mapper>
