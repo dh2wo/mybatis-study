@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.kdigital.dao.UserMapper">
+	<select id="selectAll" resultType="UsrInfo">
+		SELECT 
+    		e.employee_id AS empID,
+    		e.first_name AS fName,
+    		e.salary AS salary,
+    		e.department_id AS depID,
+    		d.department_name AS depName,
+    		l.city AS city
+		FROM 
+    		employees e JOIN departments d 
+        		ON e.department_id = d.department_id
+    		JOIN locations l 
+        		ON d.location_id = l.location_id
+	</select>
+
+	<select id="selectByID" resultType="UsrInfo" parameterType="String">
+		SELECT 
+    		e.employee_id AS empID,
+    		e.first_name AS fName,
+    		e.salary AS salary,
+    		e.department_id AS depID,
+    		d.department_name AS depName,
+    		l.city AS city
+		FROM 
+    		employees e JOIN departments d 
+        		ON e.department_id = d.department_id
+    		JOIN locations l 
+        		ON d.location_id = l.location_id
+		WHERE 
+			e.employee_id = #{e.employee_id}
+	</select>
+	
+</mapper>

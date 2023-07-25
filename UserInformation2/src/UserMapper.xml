@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 인터페이스 이름(풓네임) -->
+<mapper namespace="net.kdigital.dao.UserMapper">
+	<!-- id = 인터페이스(UserMapper.java)가 가지고 있는 메서드 이름 -->
+	<!-- resultType = vo 이름(풓네임) (mybatis-config.xml -> typeAlias) -->
+	<select id="selectUsrInfo" resultType="UsrInfo">
+		select * from usrinfo
+	</select>
+
+	<insert id="insertUi" parameterType="UsrInfo">
+		insert into usrinfo
+		values (#{id}, #{name}, #{age})
+	</insert>
+
+	<select id="selectByID" resultType="UsrInfo" parameterType="string">
+		select * from usrinfo where id = #{id}
+	</select>
+	
+	<update id="updateUi" parameterType="UsrInfo">
+		 update usrinfo set name = #{name}, age = #{age} where id = #{id}
+	</update>
+	
+	<delete id="deleteUi" parameterType="UsrInfo">
+		delete usrinfo where id = #{id}
+	</delete>
+</mapper>
